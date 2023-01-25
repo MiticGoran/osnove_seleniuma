@@ -14,7 +14,7 @@ public class Template {
 
 
 
-        Thread.sleep(4000);
+        Thread.sleep(5000);
         driver.quit();
     }
 }
