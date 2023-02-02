@@ -1,14 +1,22 @@
 package helper;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.io.FileHandler;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Helper {
-
     public boolean elementExist(WebDriver driver, By by) {
         boolean elementExist = true;
         try {
@@ -18,8 +26,43 @@ public class Helper {
         }
         return elementExist;
     }
+
     public boolean elementExistByList(WebDriver driver, By by) {
         return driver.findElements(by).size() > 0;
     }
 
+    public void downloadUsingStream(String urlStr, String relativePath) throws IOException, IOException {
+        String file = new File(relativePath).getAbsolutePath();
+        URL url = new URL(urlStr);
+        BufferedInputStream bis = new BufferedInputStream(url.openStream());
+        FileOutputStream fis = new FileOutputStream(file);
+        byte[] buffer = new byte[1024];
+        int count=0;
+        while((count = bis.read(buffer,0,1024)) != -1)
+        {
+            fis.write(buffer, 0, count);
+        }
+        fis.close();
+        bis.close();
+    }
+
+    public void takeScreenshot(WebDriver driver, String relativePath) throws IOException {
+        TakesScreenshot ts=(TakesScreenshot)driver;
+        FileHandler.copy(ts.getScreenshotAs(OutputType.FILE),
+                new File(relativePath));
+    }
+
+    public void takeScreenshotDate(WebDriver driver) throws IOException {
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+        String strDate = dateFormat.format(date);
+        File f = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        Files.copy(f.toPath(), new File("screenshots/"+strDate+".jpg").toPath());
+    }
+
+    public int getHTTPResponseStatusCode(String urlString) throws IOException {
+        URL url = new URL(urlString);
+        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        return http.getResponseCode();
+    }
 }
