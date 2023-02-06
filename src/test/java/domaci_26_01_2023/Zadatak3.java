@@ -11,11 +11,9 @@ package domaci_26_01_2023;
 
 import helper.Helper;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.json.JsonOutput;
 
 import java.time.Duration;
 import java.util.List;

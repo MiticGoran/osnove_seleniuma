@@ -3,16 +3,11 @@ package p31_01_2023;
 import helper.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
-import java.awt.*;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.time.Duration;
     public class Zadatak3 {
         public static void main(String[] args) throws InterruptedException {
